@@ -393,11 +393,11 @@
                 itemDiv.innerHTML = `
                     <span class="text-lg font-medium text-white text-center mb-2">${item.name}</span>
                     <span class="text-xl font-bold text-yellow-300 mb-3">$${item.price ? item.price.toFixed(2) : '0.00'}</span>
-                    <div class="flex gap-2 w-full">
-                        <button data-item-id="${item.id}" class="add-to-order-btn flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-200 ease-in-out">
+                    <div class="grid grid-cols-2 gap-2 w-full"> <!-- MODIFICACIÓN AQUÍ: Usando grid para los botones -->
+                        <button data-item-id="${item.id}" class="add-to-order-btn bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg shadow-sm transition duration-200 ease-in-out">
                             Añadir
                         </button>
-                        <button data-item-id="${item.id}" class="delete-menu-item-btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-200 ease-in-out">
+                        <button data-item-id="${item.id}" class="delete-menu-item-btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg shadow-sm transition duration-200 ease-in-out">
                             Eliminar
                         </button>
                     </div>
