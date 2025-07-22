@@ -1,89 +1,626 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.0.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.0.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.0.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Pedidos para Restaurantes</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Dark background */
+            color: #e2e8f0; /* Light text */
         }
-      });
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2d3748;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Main Application Container -->
+    <div class="bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-4xl flex flex-col lg:flex-row gap-6 border border-gray-700">
+        
+        <!-- Left Section: Menu Items -->
+        <div class="lg:w-2/3 bg-gray-900 p-5 rounded-lg shadow-inner border border-gray-700">
+            <h2 class="text-2xl font-bold text-indigo-400 mb-5 text-center">Menú del Restaurante</h2>
+            <div id="menu-items-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-96 overflow-y-auto pr-2">
+                <!-- Menu items will be loaded here by JavaScript -->
+                <div class="p-4 bg-gray-700 rounded-lg text-center animate-pulse">Cargando menú...</div>
+                <div class="p-4 bg-gray-700 rounded-lg text-center animate-pulse">Cargando menú...</div>
+                <div class="p-4 bg-gray-700 rounded-lg text-center animate-pulse">Cargando menú...</div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-700">
+                <h3 class="text-xl font-semibold text-indigo-400 mb-3 text-center">Gestión Rápida del Menú</h3>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="new-item-name" placeholder="Nombre del Producto" class="flex-1 p-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500">
+                    <input type="number" id="new-item-price" placeholder="Precio" step="0.01" class="w-24 p-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500">
+                    <button id="add-menu-item-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:scale-105">
+                        Añadir Producto
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Section: Current Order & Total -->
+        <div class="lg:w-1/3 bg-gray-900 p-5 rounded-lg shadow-inner border border-gray-700 flex flex-col">
+            <h2 class="text-2xl font-bold text-green-400 mb-5 text-center">Pedido Actual</h2>
+            <div id="current-order-container" class="flex-1 overflow-y-auto pr-2 mb-4">
+                <!-- Order items will be displayed here -->
+                <p id="empty-order-message" class="text-gray-400 text-center py-4">El pedido está vacío.</p>
+            </div>
+
+            <div class="mt-auto pt-4 border-t border-gray-700">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xl font-semibold text-gray-300">TOTAL:</span>
+                    <span id="total-amount" class="text-3xl font-bold text-green-400">$0.00</span>
+                </div>
+
+                <!-- New: Monto Recibido Input -->
+                <div class="mb-4">
+                    <label for="received-amount" class="block text-gray-300 text-lg font-semibold mb-2">Monto Recibido:</label>
+                    <input type="number" id="received-amount" placeholder="0.00" step="0.01" class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 text-2xl focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+
+                <!-- New: Cambio Display -->
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-xl font-semibold text-gray-300">CAMBIO:</span>
+                    <span id="change-amount" class="text-3xl font-bold text-yellow-400">$0.00</span>
+                </div>
+
+                <button id="clear-order-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:scale-105">
+                    Limpiar Pedido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Info and Status -->
+    <div class="mt-6 text-center text-gray-400 text-sm">
+        <p>ID de Usuario: <span id="user-id" class="font-mono text-gray-300">Cargando...</span></p>
+        <p>Estado de la Conexión: <span id="connection-status" class="text-yellow-400">Conectando...</span></p>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="message-box" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center border border-gray-700">
+            <p id="message-text" class="text-lg font-medium mb-4 text-white"></p>
+            <div id="message-buttons" class="flex justify-center gap-4">
+                <!-- Buttons will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, query, onSnapshot, addDoc, setDoc, doc, deleteDoc, getDocs, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // =====================================================================================
+        // ============================ ¡ATENCIÓN! CONFIGURACIÓN CRÍTICA =====================
+        // =====================================================================================
+        // DEBES REEMPLAZAR TODOS LOS VALORES "TU_..._REAL" CON LA CONFIGURACIÓN REAL DE TU PROYECTO FIREBASE.
+        // PASOS PARA OBTENER TU CONFIGURACIÓN:
+        // 1. Ve a la Consola de Firebase: https://console.firebase.google.com/
+        // 2. Selecciona tu proyecto.
+        // 3. Haz clic en el icono de engranaje (⚙️) "Project settings" (Configuración del proyecto) en el menú lateral izquierdo.
+        // 4. En la sección "Your apps" (Tus aplicaciones), haz clic en el icono </> (Web) para añadir una nueva aplicación web si no tienes una.
+        // 5. Firebase te mostrará un bloque de código JavaScript con tu 'firebaseConfig'.
+        // 6. COPIA ESE OBJETO COMPLETO Y PÉGALO AQUÍ, REEMPLAZANDO LOS VALORES ACTUALES.
+        // =====================================================================================
+        const firebaseConfig = {
+            const firebaseConfig = {
+  apiKey: "AIzaSyDvI8UPQTD_X2Hpc5NKGd88kSCnfXLZSnk",
+  authDomain: "miapprestaurantepos.firebaseapp.com",
+  projectId: "miapprestaurantepos",
+  storageBucket: "miapprestaurantepos.firebasestorage.app",
+  messagingSenderId: "953172596341",
+  appId: "1:953172596341:web:57ad6ecbece09253368a3c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+        };
+        // El appId para la ruta de Firestore debe ser el projectId de tu Firebase
+        const appId = firebaseConfig.projectId;
+        const initialAuthToken = null; // No necesitamos un token personalizado aquí para la autenticación anónima.
+
+        let app;
+        let db;
+        let auth;
+        let userId = null;
+        let menuItems = []; // Array to store menu items fetched from Firestore
+        let currentOrder = {}; // Object to store current order: {itemId: {item: {}, quantity: N}}
+        let currentTotal = 0; // Store the current total for change calculation
+
+        // DOM Elements
+        const menuItemsContainer = document.getElementById('menu-items-container');
+        const currentOrderContainer = document.getElementById('current-order-container');
+        const totalAmountSpan = document.getElementById('total-amount');
+        const clearOrderBtn = document.getElementById('clear-order-btn');
+        const emptyOrderMessage = document.getElementById('empty-order-message');
+        const userIdSpan = document.getElementById('user-id');
+        const connectionStatusSpan = document.getElementById('connection-status');
+        const messageBox = document.getElementById('message-box');
+        const messageText = document.getElementById('message-text');
+        const messageButtonsContainer = document.getElementById('message-buttons'); // New container for dynamic buttons
+        const newItemNameInput = document.getElementById('new-item-name');
+        const newItemPriceInput = document.getElementById('new-item-price');
+        const addMenuItemBtn = document.getElementById('add-menu-item-btn');
+
+        // New DOM Elements for Change Calculation
+        const receivedAmountInput = document.getElementById('received-amount');
+        const changeAmountSpan = document.getElementById('change-amount');
+
+
+        /**
+         * Custom message box function instead of alert().
+         * @param {string} message The message to display.
+         * @param {string} type Optional type for styling (e.g., 'error', 'success').
+         * @param {Array<Object>} buttons Optional array of button configurations {text: string, callback: function}.
+         */
+        function showMessage(message, type = 'info', buttons = [{ text: 'OK', callback: () => messageBox.classList.add('hidden') }]) {
+            messageText.textContent = message;
+            // Optionally add styling based on type
+            messageText.classList.remove('text-red-400', 'text-green-400', 'text-yellow-400'); // Clear previous types
+            if (type === 'error') {
+                messageText.classList.add('text-red-400');
+            } else if (type === 'success') {
+                messageText.classList.add('text-green-400');
+            } else { // Default info or other messages
+                messageText.classList.add('text-white');
+            }
+            
+            // Clear previous buttons
+            messageButtonsContainer.innerHTML = ''; 
+
+            // Add new buttons
+            buttons.forEach(btnConfig => {
+                const button = document.createElement('button');
+                button.textContent = btnConfig.text;
+                button.className = 'bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-lg transition duration-200 ease-in-out';
+                // If it's a "Cancel" type button, give it a different style
+                if (btnConfig.text.toLowerCase() === 'cancelar') {
+                    button.className = 'bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-5 rounded-lg transition duration-200 ease-in-out';
+                }
+                button.addEventListener('click', () => {
+                    btnConfig.callback();
+                    messageBox.classList.add('hidden'); // Hide message box after any button click
+                });
+                messageButtonsContainer.appendChild(button);
+            });
+
+            messageBox.classList.remove('hidden');
+        }
+
+        /**
+         * Initializes Firebase and sets up authentication.
+         */
+        async function initializeFirebase() {
+            try {
+                // Check if firebaseConfig is properly set up (i.e., not still using placeholders)
+                if (!firebaseConfig.apiKey || firebaseConfig.apiKey === "TU_API_KEY_REAL") {
+                    console.error("Firebase Config Error: apiKey is missing or still a placeholder. Please update firebaseConfig in index.html.");
+                    showMessage("Error: La clave API de Firebase no ha sido configurada correctamente. Por favor, actualiza el archivo index.html con tu configuración real de Firebase.", "error");
+                    connectionStatusSpan.textContent = "Error de Config.";
+                    connectionStatusSpan.classList.remove('text-yellow-400');
+                    connectionStatusSpan.classList.add('text-red-400');
+                    return;
+                }
+
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                connectionStatusSpan.textContent = "Autenticando...";
+                connectionStatusSpan.classList.remove('text-yellow-400');
+                connectionStatusSpan.classList.add('text-blue-400');
+
+                // Listen for auth state changes
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        userIdSpan.textContent = userId;
+                        connectionStatusSpan.textContent = "Conectado";
+                        connectionStatusSpan.classList.remove('text-blue-400', 'text-red-400');
+                        connectionStatusSpan.classList.add('text-green-400');
+                        console.log("Usuario autenticado:", userId);
+                        // Once authenticated, start listening to menu items
+                        setupFirestoreListeners();
+                    } else {
+                        userId = null;
+                        userIdSpan.textContent = "No autenticado";
+                        connectionStatusSpan.textContent = "Desconectado";
+                        connectionStatusSpan.classList.remove('text-green-400', 'text-blue-400');
+                        connectionStatusSpan.classList.add('text-red-400');
+                        console.log("Usuario no autenticado.");
+                        // Attempt to sign in if not already signed in
+                        if (initialAuthToken) {
+                            try {
+                                await signInWithCustomToken(auth, initialAuthToken);
+                                console.log("Sesión iniciada con token personalizado.");
+                            } catch (error) {
+                                console.error("Error al iniciar sesión con token personalizado:", error);
+                                showMessage("Error al iniciar sesión. Intenta recargar la página.", "error");
+                                // Fallback to anonymous if custom token fails
+                                try {
+                                    await signInAnonymously(auth);
+                                    console.log("Sesión iniciada anónimamente como fallback.");
+                                } catch (anonError) {
+                                    console.error("Error al iniciar sesión anónimamente:", anonError);
+                                    showMessage("Error crítico de autenticación. No se puede conectar.", "error");
+                                }
+                            }
+                        } else {
+                            try {
+                                await signInAnonymously(auth);
+                                console.log("Sesión iniciada anónimamente.");
+                            } catch (error) {
+                                console.error("Error al iniciar sesión anónimamente:", error);
+                                showMessage("Error crítico de autenticación. No se puede conectar.", "error");
+                            }
+                        }
+                    }
+                });
+
+                // Initial sign-in attempt if not already authenticated
+                // This block might be redundant if onAuthStateChanged handles initial state, but harmless.
+                if (!auth.currentUser) {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error al inicializar Firebase:", error);
+                showMessage("Error al inicializar la base de datos. La aplicación puede no funcionar correctamente.", "error");
+                connectionStatusSpan.textContent = "Error de Inicialización";
+                connectionStatusSpan.classList.remove('text-yellow-400');
+                connectionStatusSpan.classList.add('text-red-400');
+            }
+        }
+
+        /**
+         * Sets up real-time listeners for menu items from Firestore.
+         */
+        function setupFirestoreListeners() {
+            if (!db || !userId) {
+                console.warn("Firestore o userId no están listos para configurar listeners.");
+                return;
+            }
+
+            // Correctly use appId from the global variable (which is firebaseConfig.projectId)
+            const menuCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/menuItems`);
+            const q = query(menuCollectionRef);
+
+            onSnapshot(q, (snapshot) => {
+                menuItems = [];
+                snapshot.forEach((doc) => {
+                    menuItems.push({ id: doc.id, ...doc.data() });
+                });
+                renderMenuItems(); // Re-render menu whenever data changes
+                console.log("Menú actualizado desde Firestore:", menuItems);
+
+                // If no menu items, add some defaults for first-time users
+                if (menuItems.length === 0) {
+                    addDefaultMenuItems();
+                }
+            }, (error) => {
+                console.error("Error al escuchar cambios en el menú:", error);
+                showMessage("Error al cargar el menú desde la base de datos. Intenta recargar.", "error");
+                connectionStatusSpan.textContent = "Error de Datos";
+                connectionStatusSpan.classList.remove('text-green-400');
+                connectionStatusSpan.classList.add('text-red-400');
+            });
+        }
+
+        /**
+         * Adds default menu items to Firestore if the collection is empty.
+         */
+        async function addDefaultMenuItems() {
+            if (!db || !userId) return;
+
+            const defaultItems = [
+                { name: "MICHELADA TRADI NAC", price: 2.50 },
+                { name: "MICHELADA TAMA NAC", price: 2.50 },
+                { name: "MICHELADA CLAMA NAC", price: 2.50 },
+                { name: "MICHELADA TRADI CORONA", price: 3.25 },
+                { name: "MICHELADA TAMA CORONA", price: 3.25 },
+                { name: "MICHELADA CLAMA CORONA", price: 3.25 },
+                { name: "MICHELADA TRADI MINERAL", price: 2.00 },
+                { name: "COCTEL CAMARON CEVI", price: 3.50 },
+                { name: "COCTEL CONCHAS", price: 3.50 },
+                { name: "COCTEL PESCADO", price: 3.50 },
+                { name: "COCTEL MIXTO CEVI", price: 3.50 },
+                { name: "COCTEL CAMA SALS ROSA", price: 3.50 },
+                { name: "PILSENER", price: 1.25 },
+                { name: "GOLDEN", price: 1.25 },
+                { name: "REGIA", price: 1.25 },
+                { name: "SUPREMA", price: 1.50 },
+                { name: "CORONA", price: 2.00 }
+            ];
+
+            const menuCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/menuItems`);
+            for (const item of defaultItems) {
+                try {
+                    // Check if item already exists to prevent duplicates on every load
+                    // This is a simple check, for large menus, more robust de-duplication might be needed
+                    const q = query(menuCollectionRef, where("name", "==", item.name));
+                    const querySnapshot = await getDocs(q); // getDocs from firebase/firestore
+                    if (querySnapshot.empty) {
+                        await addDoc(menuCollectionRef, item);
+                        console.log("Añadido item por defecto:", item.name);
+                    } else {
+                        console.log("Item por defecto ya existe:", item.name);
+                    }
+                } catch (error) {
+                    console.error("Error al añadir item por defecto:", item.name, error);
+                }
+            }
+        }
+
+        /**
+         * Renders the menu items in the UI.
+         */
+        function renderMenuItems() {
+            menuItemsContainer.innerHTML = ''; // Clear previous items
+            if (menuItems.length === 0) {
+                menuItemsContainer.innerHTML = '<p class="text-gray-400 text-center col-span-full py-4">No hay productos en el menú. Añade algunos.</p>';
+                return;
+            }
+
+            menuItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'bg-gray-700 p-4 rounded-lg shadow-md flex flex-col justify-between items-center transform transition duration-200 hover:scale-105 hover:bg-gray-600 cursor-pointer';
+                itemDiv.innerHTML = `
+                    <span class="text-lg font-medium text-white text-center mb-2">${item.name}</span>
+                    <span class="text-xl font-bold text-yellow-300 mb-3">$${item.price ? item.price.toFixed(2) : '0.00'}</span>
+                    <div class="flex gap-2 w-full">
+                        <button data-item-id="${item.id}" class="add-to-order-btn flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-200 ease-in-out">
+                            Añadir
+                        </button>
+                        <button data-item-id="${item.id}" class="delete-menu-item-btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-200 ease-in-out">
+                            Eliminar
+                        </button>
+                    </div>
+                `;
+                menuItemsContainer.appendChild(itemDiv);
+            });
+
+            // Attach event listeners to new buttons
+            document.querySelectorAll('.add-to-order-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const itemId = event.target.dataset.itemId;
+                    const selectedItem = menuItems.find(item => item.id === itemId);
+                    if (selectedItem) {
+                        addItemToOrder(selectedItem);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.delete-menu-item-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const itemId = event.target.dataset.itemId;
+                    const itemName = menuItems.find(item => item.id === itemId)?.name || 'este producto';
+                    showMessage(
+                        `¿Estás seguro de que quieres eliminar "${itemName}" del menú? Esta acción es permanente.`, 
+                        'info',
+                        [
+                            { text: 'Confirmar', callback: () => deleteMenuItem(itemId) },
+                            { text: 'Cancelar', callback: () => {} } // Empty callback just closes the box
+                        ]
+                    );
+                });
+            });
+        }
+
+        /**
+         * Deletes a menu item from Firestore.
+         * @param {string} itemId The ID of the item to delete.
+         */
+        async function deleteMenuItem(itemId) {
+            if (!db || !userId) {
+                showMessage('No se puede eliminar el producto. La base de datos no está conectada.', 'error');
+                return;
+            }
+            try {
+                const itemDocRef = doc(db, `artifacts/${appId}/users/${userId}/menuItems`, itemId);
+                await deleteDoc(itemDocRef);
+                showMessage('Producto eliminado del menú.', 'success');
+                // Also remove from current order if it was part of it
+                if (currentOrder[itemId]) {
+                    delete currentOrder[itemId];
+                    renderOrder(); // Re-render order to reflect deletion
+                }
+            } catch (error) {
+                console.error("Error al eliminar item:", error);
+                showMessage('Error al eliminar el producto del menú. Intenta de nuevo.', 'error');
+            }
+        }
+
+        /**
+         * Adds an item to the current order or increments its quantity.
+         * @param {object} item The menu item object.
+         */
+        function addItemToOrder(item) {
+            if (currentOrder[item.id]) {
+                currentOrder[item.id].quantity++;
+            } else {
+                currentOrder[item.id] = { item: item, quantity: 1 };
+            }
+            renderOrder();
+        }
+
+        /**
+         * Removes an item from the current order or decrements its quantity.
+         * @param {string} itemId
+         * The ID of the item to remove.
+         */
+        function removeItemFromOrder(itemId) {
+            if (currentOrder[itemId]) {
+                currentOrder[itemId].quantity--;
+                if (currentOrder[itemId].quantity <= 0) {
+                    delete currentOrder[itemId];
+                }
+            }
+            renderOrder();
+        }
+
+        /**
+         * Renders the current order in the UI and updates the total and change.
+         */
+        function renderOrder() {
+            currentOrderContainer.innerHTML = ''; // Clear previous order items
+            let total = 0;
+            let orderIsEmpty = true;
+
+            for (const itemId in currentOrder) {
+                orderIsEmpty = false;
+                const orderItem = currentOrder[itemId];
+                const subtotal = orderItem.item.price * orderItem.quantity;
+                total += subtotal;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'bg-gray-700 p-3 rounded-lg shadow-sm mb-2 flex justify-between items-center';
+                itemDiv.innerHTML = `
+                    <div>
+                        <span class="text-white font-medium">${orderItem.item.name}</span>
+                        <span class="text-gray-400 text-sm ml-2">(${orderItem.item.price.toFixed(2)} c/u)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <button data-item-id="${itemId}" class="remove-item-btn bg-red-500 hover:bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center mr-2 transition duration-200 ease-in-out transform hover:scale-110">
+                            -
+                        </button>
+                        <span class="text-yellow-300 font-bold text-lg">${orderItem.quantity}</span>
+                        <button data-item-id="${itemId}" class="add-item-btn bg-green-500 hover:bg-green-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center ml-2 transition duration-200 ease-in-out transform hover:scale-110">
+                            +
+                        </button>
+                        <span class="text-white font-semibold ml-4">$${subtotal.toFixed(2)}</span>
+                    </div>
+                `;
+                currentOrderContainer.appendChild(itemDiv);
+            }
+
+            if (orderIsEmpty) {
+                emptyOrderMessage.classList.remove('hidden');
+                currentOrderContainer.appendChild(emptyOrderMessage);
+            } else {
+                emptyOrderMessage.classList.add('hidden');
+            }
+
+            currentTotal = total; // Update global total
+            totalAmountSpan.textContent = `$${currentTotal.toFixed(2)}`;
+            calculateChange(); // Recalculate change whenever order total changes
+
+            // Attach event listeners for quantity buttons
+            document.querySelectorAll('.add-item-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const itemId = event.target.dataset.itemId;
+                    const selectedItem = menuItems.find(item => item.id === itemId);
+                    if (selectedItem) {
+                        addItemToOrder(selectedItem);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.remove-item-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const itemId = event.target.dataset.itemId;
+                    removeItemFromOrder(itemId);
+                });
+            });
+        }
+
+        /**
+         * Calculates and displays the change amount.
+         */
+        function calculateChange() {
+            const receivedAmount = parseFloat(receivedAmountInput.value);
+            let change = 0;
+
+            // Limpiar clases antes de aplicar nuevas
+            changeAmountSpan.classList.remove('text-red-400', 'text-yellow-400');
+
+            if (!isNaN(receivedAmount) && receivedAmount >= currentTotal) {
+                change = receivedAmount - currentTotal;
+                changeAmountSpan.classList.add('text-yellow-400'); // Cambio positivo o cero
+            } else if (!isNaN(receivedAmount) && receivedAmount < currentTotal) {
+                change = receivedAmount - currentTotal; // Será un valor negativo
+                changeAmountSpan.classList.add('text-red-400'); // Monto insuficiente
+            } else {
+                change = 0; // Si el input no es un número válido o está vacío
+                changeAmountSpan.classList.add('text-yellow-400'); // Por defecto, si no hay input, mostrar 0 en amarillo
+            }
+            changeAmountSpan.textContent = `$${change.toFixed(2)}`;
+        }
+
+        /**
+         * Clears the current order and resets change calculation.
+         */
+        function clearOrder() {
+            currentOrder = {};
+            receivedAmountInput.value = ''; // Clear received amount input
+            renderOrder(); // This will also call calculateChange()
+            showMessage('Pedido limpiado. ¡Listo para una nueva venta!', 'success');
+        }
+
+        /**
+         * Adds a new menu item to Firestore.
+         */
+        addMenuItemBtn.addEventListener('click', async () => {
+            const name = newItemNameInput.value.trim();
+            const price = parseFloat(newItemPriceInput.value);
+
+            if (!name || isNaN(price) || price <= 0) {
+                showMessage('Por favor, introduce un nombre y un precio válido para el producto.', 'error');
+                return;
+            }
+
+            if (!db || !userId) {
+                showMessage('No se puede añadir el producto. La base de datos no está conectada.', 'error');
+                return;
+            }
+
+            try {
+                const menuCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/menuItems`);
+                await addDoc(menuCollectionRef, { name, price });
+                showMessage(`"${name}" añadido al menú.`, 'success');
+                newItemNameInput.value = '';
+                newItemPriceInput.value = '';
+            } catch (error) {
+                console.error("Error al añadir nuevo item:", error);
+                showMessage('Error al añadir el producto al menú. Intenta de nuevo.', 'error');
+            }
+        });
+
+        // Event Listeners
+        clearOrderBtn.addEventListener('click', clearOrder);
+        receivedAmountInput.addEventListener('input', calculateChange); // Listen for input changes to calculate change
+
+        // Initialize Firebase when the window loads
+        window.onload = initializeFirebase;
+
+        // Initial render of an empty order (and initial change calculation)
+        renderOrder(); 
     </script>
-  </body>
+</body>
 </html>
