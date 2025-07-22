@@ -126,25 +126,21 @@
         // 6. COPIA ESE OBJETO COMPLETO Y PÉGALO AQUÍ, REEMPLAZANDO LOS VALORES ACTUALES.
         // =====================================================================================
         const firebaseConfig = {
-            const firebaseConfig = {
-  apiKey: "AIzaSyDvI8UPQTD_X2Hpc5NKGd88kSCnfXLZSnk",
-  authDomain: "miapprestaurantepos.firebaseapp.com",
-  projectId: "miapprestaurantepos",
-  storageBucket: "miapprestaurantepos.firebasestorage.app",
-  messagingSenderId: "953172596341",
-  appId: "1:953172596341:web:57ad6ecbece09253368a3c"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+            apiKey: "AIzaSyDvI8UPQTD_X2Hpc5NKGd88kSCnfXLZSnk",
+            authDomain: "miapprestaurantepos.firebaseapp.com",
+            projectId: "miapprestaurantepos",
+            storageBucket: "miapprestaurantepos.firebasestorage.app",
+            messagingSenderId: "953172596341",
+            appId: "1:953172596341:web:57ad6ecbece09253368a3c"
         };
+
         // El appId para la ruta de Firestore debe ser el projectId de tu Firebase
         const appId = firebaseConfig.projectId;
         const initialAuthToken = null; // No necesitamos un token personalizado aquí para la autenticación anónima.
 
-        let app;
-        let db;
-        let auth;
+        let app; // Declaración de la variable 'app'
+        let db;  // Declaración de la variable 'db'
+        let auth; // Declaración de la variable 'auth'
         let userId = null;
         let menuItems = []; // Array to store menu items fetched from Firestore
         let currentOrder = {}; // Object to store current order: {itemId: {item: {}, quantity: N}}
