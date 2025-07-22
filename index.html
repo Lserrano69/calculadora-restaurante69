@@ -138,9 +138,9 @@
         const appId = firebaseConfig.projectId;
         const initialAuthToken = null; // No necesitamos un token personalizado aquí para la autenticación anónima.
 
-        let app; // Declaración de la variable 'app'
-        let db;  // Declaración de la variable 'db'
-        let auth; // Declaración de la variable 'auth'
+        let app; 
+        let db;  
+        let auth; 
         let userId = null;
         let menuItems = []; // Array to store menu items fetched from Firestore
         let currentOrder = {}; // Object to store current order: {itemId: {item: {}, quantity: N}}
@@ -237,7 +237,7 @@
                         connectionStatusSpan.textContent = "Conectado";
                         connectionStatusSpan.classList.remove('text-blue-400', 'text-red-400');
                         connectionStatusSpan.classList.add('text-green-400');
-                        console.log("Usuario autenticado:", userId);
+                        console.log("Usuario autenticado. UID:", userId); // Added UID here for debugging
                         // Once authenticated, start listening to menu items
                         setupFirestoreListeners();
                     } else {
@@ -304,8 +304,11 @@
                 return;
             }
 
-            // Correctly use appId from the global variable (which is firebaseConfig.projectId)
-            const menuCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/menuItems`);
+            // Log the full path being accessed for debugging permissions
+            const firestorePath = `artifacts/${appId}/users/${userId}/menuItems`;
+            console.log("Intentando acceder a Firestore en la ruta:", firestorePath);
+
+            const menuCollectionRef = collection(db, firestorePath);
             const q = query(menuCollectionRef);
 
             onSnapshot(q, (snapshot) => {
@@ -572,11 +575,45 @@
         /**
          * Clears the current order and resets change calculation.
          */
-        function clearOrder() {
+        async function clearOrder() {
+            // Only save if there's an actual order
+            if (Object.keys(currentOrder).length > 0 && currentTotal > 0) {
+                if (!db || !userId) {
+                    showMessage('No se puede guardar el pedido. La base de datos no está conectada.', 'error');
+                    return;
+                }
+
+                try {
+                    const completedOrdersCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/completedOrders`);
+                    
+                    const itemsToSave = Object.values(currentOrder).map(orderItem => ({
+                        id: orderItem.item.id,
+                        name: orderItem.item.name,
+                        price: orderItem.item.price,
+                        quantity: orderItem.quantity
+                    }));
+
+                    const completedOrderData = {
+                        timestamp: new Date().toISOString(), // ISO 8601 format
+                        totalAmount: currentTotal,
+                        items: itemsToSave
+                    };
+
+                    await addDoc(completedOrdersCollectionRef, completedOrderData);
+                    console.log("Pedido guardado en Firestore:", completedOrderData);
+                    showMessage('Pedido guardado y limpiado. ¡Listo para una nueva venta!', 'success');
+
+                } catch (error) {
+                    console.error("Error al guardar el pedido completado:", error);
+                    showMessage('Error al guardar el pedido. Intenta de nuevo.', 'error');
+                }
+            } else {
+                showMessage('El pedido está vacío, no hay nada que guardar.', 'info');
+            }
+            
             currentOrder = {};
             receivedAmountInput.value = ''; // Clear received amount input
             renderOrder(); // This will also call calculateChange()
-            showMessage('Pedido limpiado. ¡Listo para una nueva venta!', 'success');
         }
 
         /**
