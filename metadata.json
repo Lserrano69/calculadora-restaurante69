@@ -1,0 +1,5 @@
+{
+  "name": "POS Restaurante Pro",
+  "description": "Una aplicación de punto de venta (POS) para restaurantes, mejorada y convertida en una Aplicación Web Progresiva (PWA) instalable. Construida con React, TypeScript y Tailwind CSS, y conectada a Firebase para la gestión de datos en tiempo real.",
+  "requestFramePermissions": []
+}
