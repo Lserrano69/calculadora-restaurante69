@@ -116,8 +116,14 @@
         // =====================================================================================
         // ============================ ¡ATENCIÓN! CONFIGURACIÓN CRÍTICA =====================
         // =====================================================================================
-        // ESTA CONFIGURACIÓN YA ESTÁ CON TUS CREDENCIALES DE MIA PPRESTAURANTEPOS.
-        // NO NECESITAS CAMBIAR NADA AQUÍ A MENOS QUE CAMBIES DE PROYECTO FIREBASE.
+        // DEBES REEMPLAZAR TODOS LOS VALORES "TU_..._REAL" CON LA CONFIGURACIÓN REAL DE TU PROYECTO FIREBASE.
+        // PASOS PARA OBTENER TU CONFIGURACIÓN:
+        // 1. Ve a la Consola de Firebase: https://console.firebase.google.com/
+        // 2. Selecciona tu proyecto.
+        // 3. Haz clic en el icono de engranaje (⚙️) "Project settings" (Configuración del proyecto) en el menú lateral izquierdo.
+        // 4. En la sección "Your apps" (Tus aplicaciones), haz clic en el icono </> (Web) para añadir una nueva aplicación web si no tienes una.
+        // 5. Firebase te mostrará un bloque de código JavaScript con tu 'firebaseConfig'.
+        // 6. COPIA ESE OBJETO COMPLETO Y PÉGALO AQUÍ, REEMPLAZANDO LOS VALORES ACTUALES.
         // =====================================================================================
         const firebaseConfig = {
             apiKey: "AIzaSyDvI8UPQTD_X2Hpc5NKGd88kSCnfXLZSnk",
@@ -149,7 +155,7 @@
         const userIdSpan = document.getElementById('user-id');
         const connectionStatusSpan = document.getElementById('connection-status');
         const messageBox = document.getElementById('message-box');
-        const messageText = document.getElementById('message-text'); // Corrected line: removed '= document'
+        const messageText = document.getElementById('message-text');
         const messageButtonsContainer = document.getElementById('message-buttons'); // New container for dynamic buttons
         const newItemNameInput = document.getElementById('new-item-name');
         const newItemPriceInput = document.getElementById('new-item-price');
@@ -387,11 +393,11 @@
                 itemDiv.innerHTML = `
                     <span class="text-lg font-medium text-white text-center mb-2">${item.name}</span>
                     <span class="text-xl font-bold text-yellow-300 mb-3">$${item.price ? item.price.toFixed(2) : '0.00'}</span>
-                    <div class="grid grid-cols-2 gap-2 w-full"> <!-- MODIFICACIÓN AQUÍ: Usando grid para los botones -->
-                        <button data-item-id="${item.id}" class="add-to-order-btn bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg shadow-sm transition duration-200 ease-in-out">
+                    <div class="flex gap-2 w-full">
+                        <button data-item-id="${item.id}" class="add-to-order-btn flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-200 ease-in-out">
                             Añadir
                         </button>
-                        <button data-item-id="${item.id}" class="delete-menu-item-btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg shadow-sm transition duration-200 ease-in-out">
+                        <button data-item-id="${item.id}" class="delete-menu-item-btn bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm transition duration-200 ease-in-out">
                             Eliminar
                         </button>
                     </div>
@@ -650,4 +656,4 @@
         renderOrder(); 
     </script>
 </body>
-</html>
+</html> 
