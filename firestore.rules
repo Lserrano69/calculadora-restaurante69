@@ -2,14 +2,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     // Regla para la colección de items del menú de cada usuario
-    // Permite a usuarios autenticados leer y escribir en su propio menú
-    match /artifacts/{appId}/users/{userId}/menuItems/{document=**} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-    }
-
-    // NUEVA REGLA: Permite a usuarios autenticados guardar y leer sus pedidos completados
-    // {appId} debe coincidir con el PROJECT_ID de tu firebaseConfig en el JS
-    match /artifacts/{appId}/users/{userId}/completedOrders/{document=**} {
+    // Permite leer y escribir si el usuario está autenticado y es el propietario de los datos (userId).
+    match /artifacts/{appId}/users/{userId}/{document=**} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
   }
